@@ -64,8 +64,9 @@ jobs:
           echo "Author of latest commit: $AUTHOR"
           # Find the first commit by this author in reverse order
           FIRST_COMMIT=$(git log RexPilot --reverse --author="$AUTHOR" --pretty=format:'%H' | head -n 1)
-          echo "First commit by author: $FIRST_COMMIT"
+          FIRST_COMMIT=$(git rev-parse $FIRST_COMMIT^)
           echo "first_commit=$FIRST_COMMIT" >> $GITHUB_ENV
+          echo "Parent of first commit by author: $FIRST_COMMIT"
 
       - name: Cherry-pick commits from the first author commit to the latest one
         id: cherry
